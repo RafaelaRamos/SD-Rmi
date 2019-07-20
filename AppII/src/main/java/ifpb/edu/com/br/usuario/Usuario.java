@@ -7,20 +7,18 @@ package ifpb.edu.com.br.usuario;
 
 import java.util.Objects;
 
-
-
 public class Usuario {
-       private int id;
-       private String nome;
-     
 
-    public Usuario() {
-      this.id =id;
+    private int id;
+    private String nome;
+
+    public Usuario(int id) {
+        this.id = id;
     }
 
-    public Usuario(int id,String nome) {
-       this.id= id;
-       this.nome=nome;
+    public Usuario(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
     }
 
     public int getId() {
@@ -72,6 +70,5 @@ public class Usuario {
     public String toString() {
         return "Usuario{" + "id=" + id + ", nome=" + nome + '}';
     }
-        
-        
+
 }

@@ -8,14 +8,15 @@ package ifpb.edu.com.br.main;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.concurrent.Semaphore;
 
 /**
  *
  * @author Cliente
  */
 public class AppII {
-
-    public static void main(String[] args) throws SQLException, RemoteException, NotBoundException, InterruptedException {
+    private static Semaphore sem = new Semaphore(1);
+    public static void main(String[] args) throws RemoteException, NotBoundException, InterruptedException {
         Controlador controlador = new Controlador();
 
         for (int i = 0; i < 100; i++) {
@@ -24,13 +25,12 @@ public class AppII {
             Thread atualizar = new Thread(controlador.atualizar);
             Thread deletar = new Thread(controlador.deletar);
 
+            sem.acquire();
             salvar.start();
-            Thread.sleep(5000);
+            sem.release();
+            //Thread.sleep(5000);
             atualizar.start();
             deletar.start();
-
         }
-
     }
-
 }

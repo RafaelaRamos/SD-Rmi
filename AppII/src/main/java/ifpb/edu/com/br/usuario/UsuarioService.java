@@ -4,10 +4,7 @@ package ifpb.edu.com.br.usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -18,7 +15,7 @@ public class UsuarioService {
     public Connection getConnection() throws SQLException {
 
         Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost/sd",
-                "postgres", "secret");
+                "postgres", "123");
         return connection;
     }
 

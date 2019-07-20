@@ -18,18 +18,11 @@ import java.rmi.server.UnicastRemoteObject;
 public class ServidorId {
 
     public static void main(String[] args) throws RemoteException, InterruptedException {
-     
-      
-       
-       Id identity= new IdentityManager();
-       Id id = (Id)UnicastRemoteObject.exportObject(identity,0);
-       Registry registry = LocateRegistry.createRegistry(1099);
-      
-       registry.rebind("idUsuario",id);
-       
-      
-        
-        }
-    
-    
+
+        Id identity = new IdentityManager();
+        Id id = (Id) UnicastRemoteObject.exportObject(identity, 0);
+        Registry registry = LocateRegistry.createRegistry(1099);
+
+        registry.rebind("idUsuario", id);
+    }
 }

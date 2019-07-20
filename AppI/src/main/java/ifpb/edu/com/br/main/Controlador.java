@@ -20,7 +20,7 @@ public class Controlador {
     private static ArrayBlockingQueue<Integer> bufferatualizar;
     final long tempo = System.currentTimeMillis();
 
-    private static Semaphore sem = new Semaphore(1);
+    //private static Semaphore sem = new Semaphore(1);
 
     private UsuarioService us = new UsuarioService();
     private Id id;
@@ -38,43 +38,34 @@ public class Controlador {
         @Override
         public void run() {
             try {
-
-                sem.acquire();
-
+                //sem.acquire();
                 Usuario u = new Usuario(id.getId(), "teste");
                 while (true) {
-
                     if (us.salvar(u)) {
                         break;
                     } else {
-                        
                         u.setId(id.getId());
-
                     }
                 }
-
-                sem.release();
+                //sem.release();
                 bufferatualizar.put(u.getId());
             } catch (InterruptedException ex) {
                 Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (RemoteException ex) {
                 Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
-
     };
 
     Runnable atualizar = new Runnable() {
 
         @Override
         public void run() {
-
             try {
                 int id = bufferatualizar.take();
                 us.atualizar(id);
                 bufferdelete.put(id);
-                System.out.println("atualizou");
+                System.out.println("atualizou: " + id);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -90,6 +81,7 @@ public class Controlador {
             try {
                 int id = bufferdelete.take();
                 us.deletar(id);
+                System.out.println("delete: " + id);
                 long tempofinal = System.currentTimeMillis();
                 long total = tempofinal - tempo;
                 System.out.println(total);
@@ -98,10 +90,6 @@ public class Controlador {
             } catch (SQLException ex) {
                 Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-        }
-    ;
-
-};
-
+        };
+    };
 }
