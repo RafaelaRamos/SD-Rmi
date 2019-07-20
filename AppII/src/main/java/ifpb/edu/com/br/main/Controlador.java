@@ -42,14 +42,24 @@ public class Controlador {
                 sem.acquire();
 
                 Usuario u = new Usuario(id.getId(), "teste");
-                us.salvar(u);
+                while(true){
+                    
+                    if(us.salvar(u)){
+                         break;
+                }
+                    else{
+                   
+                    u.setId(id.getId());
+                  
+                    
+                    }
+                }
+                
 
                 sem.release();
                 bufferatualizar.put(u.getId());
 
-            } catch (SQLException ex) {
-                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
+            }  catch (InterruptedException ex) {
                 Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (RemoteException ex) {
                 Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);

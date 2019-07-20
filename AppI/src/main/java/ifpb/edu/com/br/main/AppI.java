@@ -15,16 +15,17 @@ import java.sql.SQLException;
  */
 public class AppI{
 
-    public static void main(String[] args) throws SQLException, RemoteException, NotBoundException {
+    public static void main(String[] args) throws SQLException, RemoteException, NotBoundException, InterruptedException {
         Controlador controlador = new Controlador();
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 100; i++) {
             System.out.println("new thread");
             Thread salvar = new Thread(controlador.salvar);
             Thread atualizar = new Thread(controlador.atualizar);
             Thread deletar = new Thread(controlador.deletar);
 
             salvar.start();
+           Thread.sleep(5000);
             atualizar.start();
             deletar.start();
 

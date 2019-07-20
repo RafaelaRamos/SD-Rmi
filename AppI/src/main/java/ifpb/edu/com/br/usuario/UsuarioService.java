@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,15 +22,20 @@ public class UsuarioService {
         return connection;
     }
 
-    public synchronized void salvar(Usuario u) throws SQLException {
-        String sql = "INSERT INTO usuario (id,nome) VALUES (?,?)";
-        Connection con = getConnection();
-        PreparedStatement stm = con.prepareStatement(sql);
-        stm.setInt(1, u.getId());
-        stm.setString(2,u.getNome());
-        stm.executeUpdate();
-        stm.close();
-        con.close();
+    public synchronized Boolean salvar(Usuario u)  {
+        try {
+            String sql = "INSERT INTO usuario (id,nome) VALUES (?,?)";
+            Connection con = getConnection();
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setInt(1, u.getId());
+            stm.setString(2,u.getNome());
+            stm.executeUpdate();
+            stm.close();
+            con.close();
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
         
         
     }
